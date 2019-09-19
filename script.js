@@ -259,7 +259,7 @@ var g = new Gauge("receiver",{
       forestroke_dasharray: "0,2000"
 })
 
-text.innerText = "var defaul_config = " + JSON.stringify(g._defaultConfig,null,1);
+text.innerHTML = "var defaul_config = " + JSON.stringify(g._defaultConfig,null,1);
 
 /*var editor = CodeMirror.fromTextArea(text, {
   lineNumbers: true,
