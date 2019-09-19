@@ -1,0 +1,50 @@
+html, body {width:100%;height:99.90%;margin: 0px;padding:0px;}
+svg {width:100%;height:100%;background-color:#fff;}
+
+.h50 {height: 50%;}
+
+
+.b {border:10px solid black}
+.container           {display: flex;}
+.row                 {flex-direction: row;}
+.row-reverse         {flex-direction: row-reverse;}
+.column              {flex-direction: column;}
+.column-reverse      {flex-direction: column-reverse;}
+.wrap                {flex-wrap: wrap;}
+.nowrap              {flex-wrap: nowrap;}
+.wrap-reverse        {flex-wrap: wrap-reverse;}
+.justify-start       {justify-content: flex-start;}
+.justify-end         {justify-content: flex-end;}
+.justify-center      {justify-content: center;}
+.justify-around      {justify-content: space-around;}
+.justify-between     {justify-content: space-between;}
+.align-start         {align-items: flex-start;}
+.align-end           {align-items: flex-end;}
+.align-center        {align-items: center;}
+.align-baseline      {align-items: baseline;}
+.align-stretch       {align-items: stretch;}
+
+.align-self-start    {align-self: flex-start;}
+.align-self-end      {align-self: flex-end;}
+.align-self-center   {align-self: center;}
+.align-self-baseline {align-self: baseline;}
+.align-self-stretch  {align-self: stretch;}
+
+.center              {justify-content: center;align-items: center;}
+.basis1              {flex-basis: 100px!important;}
+.basis2              {flex-basis: 200px!important;}
+.basis3              {flex-basis: 300px!important;}
+.basis4              {flex-basis: 400px!important;}
+.basis5              {flex-basis: 500px!important;}
+.basis6              {flex-basis: 600px!important;}
+.basis7              {flex-basis: 700px!important;}
+.basis8              {flex-basis: 800px!important;}
+.basis9              {flex-basis: 900px!important;}
+.basis10             {flex-basis: 1000px!important;}
+.flex                {flex: 1;}
+.flex1               {flex-grow: 1;}
+.flex2               {flex-grow: 2;}
+.flex3               {flex-grow: 3;}
+.flex4               {flex-grow: 4;}
+.flex5               {flex-grow: 5;}
+.full-height         {height: 100%}

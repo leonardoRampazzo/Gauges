@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Gauges</title>
+  <link rel="stylesheet" href="codemirror-5.48.4\lib\codemirror.css">
+  <script src="codemirror-5.48.4\lib\codemirror.js"></script>
+  <script src="codemirror-5.48.4\mode\javascript\javascript.js"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div class="container column full-height">
+    <div id="receiver" class="container row flex b h50">
+    </div>
+
+    <div class="container row flex b h50 ">
+
+      <div id="left" class="container column flex b">
+        <textarea id="text" class="flex">
+        </textarea>
+
+        <div class="container column align-baseline">
+          <input class="align-self-end" type="button" id="render" value="Render" />
+        </div>
+      </div>
+
+      <div class="flex b"></div>
+    </div>
+
+  </div>
+</body>
+<script src="./script.js"></script>
+
+</html>
