@@ -245,6 +245,11 @@ class Gauge {
   }
 }
 
+function change(input,id){
+  var input_number = document.getElementById(id);
+  input_number.value = input.value;
+}
+
 var text = document.getElementById("text")
 var g = new Gauge("receiver",{
       //size: {cx:100,cy:100,r:50},
@@ -261,20 +266,7 @@ var g = new Gauge("receiver",{
 
 text.innerHTML = "var defaul_config = " + JSON.stringify(g._defaultConfig,null,1);
 
-/*var editor = CodeMirror.fromTextArea(text, {
-  lineNumbers: true,
-  mode: "javascript"
-});
+g.render();
 
-editor.getDoc().setValue("var defaul_config = " + JSON.stringify(g._defaultConfig,null,2));
 
-var left = document.getElementById('left');
-
-addResizeListener(left, function () {
-  editor.setSize(left.offsetWidth - 21,null);
-});
-*/
-//g.render();
-//g.resize();
-//text.innerText = "defaul_config = " + JSON.stringify(g._defaultConfig);
 

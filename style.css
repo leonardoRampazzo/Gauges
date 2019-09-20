@@ -1,10 +1,19 @@
-html, body {width:100%;height:99.90%;margin: 0px;padding:0px;}
+html, body {width:100%;height:99.90%;margin: 0px;padding:0px;background-color: black;}
 svg {width:100%;height:100%;background-color:#fff;}
 
-.h50 {height: 50%;}
+.h50  {height: 50%;}
+label {width: 40px;text-align: right}
+input[type=number]  {width: 60px;text-align: right;margin-right: 5px}
+input[type=text]  {width: 60px;margin-right: 5px}
 
+div#receiver {background-color: #fff; border-radius: 13px; border-bottom: 5px solid black;}
+div#left     {background-color: #fff; border-radius: 13px; border-top:5px solid black; border-right: 5px solid black;}
+div#right    {background-color: #fff; border-radius: 13px; border-top:5px solid black; border-left: 5px solid black;}
+
+textarea     {border-radius: 8px; margin-bottom:10px}
 
 .b {border:10px solid black}
+
 .container           {display: flex;}
 .row                 {flex-direction: row;}
 .row-reverse         {flex-direction: row-reverse;}
@@ -48,3 +57,32 @@ svg {width:100%;height:100%;background-color:#fff;}
 .flex4               {flex-grow: 4;}
 .flex5               {flex-grow: 5;}
 .full-height         {height: 100%}
+
+
+output { 
+    position: absolute;
+    background-image: linear-gradient(top, #444444, #999999);
+    width: 40px; 
+    height: 30px; 
+    text-align: center; 
+    color: white; 
+    border-radius: 10px; 
+    display: inline-block; 
+    font: bold 15px/30px Georgia;
+    bottom: 175%;
+    left: 0;
+    margin-left: -1%;
+  }
+  output:after { 
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 10px solid #999999;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    margin-top: -1px;
+  }
