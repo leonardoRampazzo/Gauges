@@ -70,7 +70,7 @@
 
 class Gauge {
   constructor(div, config) {
-    var defaultConfig = {
+    this._defaultConfig = {
       size: "auto",
       colors: ["#FF382D", "#E86A1F", "#FFB82F", "#E8D01F", "#B1FF27", "#0D964D"],
       animation: true,
@@ -81,42 +81,54 @@ class Gauge {
       foregroundstroke_width: 10,
       forestroke_dasharray: "0,2000"
     };
+
     try {
       var div_parent = document.getElementById(div);
       if (!div_parent)
-        throw ("Div " + div + " não encontrada");
+        throw ("Div " + div + " nÃ£o encontrada");
       this._div = div_parent;
-      this._size = config.size ? (config.size) : (defaultConfig.size);
-      this._colors = config.colors ? (config.colors) : (defaultConfig.colors);
-      this._animation = config.animation ? (config.animation) : (defaultConfig.animation);
-      this._animation_time = config.animation_time ? (config.animation_time) : (defaultConfig.animation_time);
+      this._size = config.size ? (config.size) : (this._defaultConfig.size);
+      this._colors = config.colors ? (config.colors) : (this._defaultConfig.colors);
+      this._animation = config.animation ? (config.animation) : (this._defaultConfig.animation);
+      this._animation_time = config.animation_time ? (config.animation_time) : (this._defaultConfig.animation_time);
+
+      this.background_stroke = config.background_stroke ? (config.background_stroke) : (this._defaultConfig.background_stroke);
+      this.foreground_stroke = config.foreground_stroke ? (config.foreground_stroke) : (this._defaultConfig.foreground_stroke);
+      this.backgroundstroke_width = config.backgroundstroke_width ? (config.backgroundstroke_width) : (this._defaultConfig.backgroundstroke_width);
+      this.foregroundstroke_width = config.foregroundstroke_width ? (config.foregroundstroke_width) : (this._defaultConfig.foregroundstroke_width);
+      this.forestroke_dasharray = config.forestroke_dasharray ? (config.forestroke_dasharray) : (this._defaultConfig.forestroke_dasharray);
+
     } catch (err) {
       console.log(err);
     }
   }
-  render() {
+
+  render() { 
     if (this._size == 'auto') {
       var cx = this._div.offsetWidth / 2;
       var cy = this._div.offsetHeight / 2;
-      var r = Math.sqrt(Math.pow(this._div.offsetWidth, 2) + Math.pow(this._div.offsetHeight, 2)) / 4; //ajustar
+      var r =  Math.sqrt(Math.pow(this._div.offsetWidth, 2) + Math.pow(this._div.offsetHeight, 2)) / 3.3;
     } else {
       try {
         var cx = this._size.cx;
         var cy = this._size.cy;
         var r = this._size.r;
         if (cx == undefined || cy == undefined || r == undefined) {
-          throw "Erro na definição das dimensões";
+          throw "Erro na definiÃ§Ã£o das dimensÃµes";
           cx = cy = r = 0;
         }
       } catch (err) {
         console.log(err);
       }
     }
+    
+    
     this._set_perc = 0;
     this._svg = document.createElementNS('http://www.w3.org/2000/svg', "svg");
     this._circle_background = document.createElementNS('http://www.w3.org/2000/svg', "circle");
     this._circle_foreground = document.createElementNS('http://www.w3.org/2000/svg', "circle");
     this._circle_text = document.createElementNS('http://www.w3.org/2000/svg', "text");
+
     this._circle_background.setAttributeNS(null, "stroke", "#f0f0f0");
     this._circle_background.setAttributeNS(null, "stroke-width", "5");
     this._circle_background.setAttributeNS(null, "cx", cx);
@@ -132,38 +144,27 @@ class Gauge {
     this._circle_foreground.setAttributeNS(null, "stroke-dasharray", "0,2000");
     this._circle_foreground.setAttributeNS(null, "transform", "rotate(-90," + cx + "," + cy + ")");
 
-    if (this._size == 'auto') {
-      this._svg.setAttributeNS(null,"width", "100%");
-      this._svg.setAttributeNS(null,"height", "100%");
-    } else {
-      this._svg.style.width = this._div.offsetWidth;
-      this._svg.style.height = this._div.offsetHeight;
-    }
-
     this._svg.appendChild(this._circle_background);
     this._svg.appendChild(this._circle_foreground);
     this._svg.appendChild(this._circle_text);
     this._div.appendChild(this._svg);
 
-    /*
+    
     var self = this;
     if (this._size == "auto") {
       addResizeListener(this._div, function () {
         self.resize();
       });
     };
-    */
   }
 
   resize() {
-    console.log("div", this._div);
-    console.log("div", this._div.offsetWidth, this._div.offsetHeight);
-
-    console.log("svg", this._svg.width.animVal.value, this._svg.height.animVal.value);
-
     var cx = this._div.offsetWidth / 2;
     var cy = this._div.offsetHeight / 2;
-    var r = Math.sqrt(Math.pow(this._div.offsetWidth, 2) + Math.pow(this._div.offsetHeight, 2)) / 4; //ajustar
+    var r = Math.sqrt(Math.pow(this._div.offsetWidth, 2) + Math.pow(this._div.offsetHeight, 2)) / 3.3;
+    if((r >= this._div.offsetWidth / 2)||(r >= this._div.offsetHeight / 2)){
+      return;
+    }
     this._circle_background.setAttributeNS(null, "cx", cx);
     this._circle_background.setAttributeNS(null, "cy", cy);
     this._circle_background.setAttributeNS(null, "r", r);
@@ -244,47 +245,28 @@ class Gauge {
   }
 }
 
-var g = new Gauge("div_teste", {
-  animation: true,
-  animation_time: '2s'
-});
+function change(input,id){
+  var input_number = document.getElementById(id);
+  input_number.value = input.value;
+}
 
-var g1 = new Gauge("div_teste1", {
-  animation: true,
-  animation_time: '0.1s'
-});
+var text = document.getElementById("text")
+var g = new Gauge("receiver",{
+      //size: {cx:100,cy:100,r:50},
+      size: "auto",
+      colors: ["#FF382D", "#E86A1F", "#FFB82F", "#E8D01F", "#B1FF27", "#0D964D"],
+      animation: true,
+      animation_time: '3s',
+      background_stroke: "#f0f0f0",
+      foreground_stroke: "#f0f0f0",
+      backgroundstroke_width: 10,
+      foregroundstroke_width: 10,
+      forestroke_dasharray: "0,2000"
+})
 
-var g2 = new Gauge("div_teste2", {
-  animation: true,
-  animation_time: '0.1s'
-});
+text.innerHTML = "var defaul_config = " + JSON.stringify(g._defaultConfig,null,1);
 
 g.render();
-//g1.render();
-//g2.render();
 
-g.resize();
 
-function run() {
-  g.complete(90);
-}
 
-function run1() {
-  g1.complete(40);
-}
-
-function run2() {
-  g2.complete(50);
-}
-
-function limpa() {
-  g.clear();
-}
-
-function limpa1() {
-  g1.clear();
-}
-
-function limpa2() {
-  g2.clear();
-}

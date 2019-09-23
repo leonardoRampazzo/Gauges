@@ -2,31 +2,100 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>teste comp</title>
-    <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <title>Gauges</title>
+  <!--
+  <link rel="stylesheet" href="codemirror-5.48.4\lib\codemirror.css">
+  <script src="codemirror-5.48.4\lib\codemirror.js"></script>
+  <script src="codemirror-5.48.4\mode\javascript\javascript.js"></script>
+  -->
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-    <div class="container column full-height" >
-        <div class="container row flex1  align-baseline" style="border:10px solid yellowgreen">
-            <input type="button" onclick="run()" value="run">
-            <input type="button" onclick="limpa()" value="limpa">
-            <input type="button" onclick="run1()" value="run">
-            <input type="button" onclick="limpa1()" value="limpa">
-            <input type="button" onclick="run2()" value="run">
-            <input type="button" onclick="limpa2()" value="limpa">
-        </div>
-
-        <div class="container row flex8">
-            <div id="div_teste1" class="flex1" style="margin:1px; border:10px solid red"></div>
-            <div id="div_teste2" class="flex1" style="margin:1px; border:10px solid blue"></div>
-        </div>
-
-        <div class="container flex8">
-            <div id="div_teste" class="flex1" style="padding:1px; margin:1px; border:1px solid green"></div>
-        </div>
+  <div class="container column full-height">
+    <div id="receiver" class="container row flex b h50">
     </div>
+    <div class="container row flex  h50 ">
+      <div id="left" class="container column flex b">
+        <textarea id="text" class="flex">
+        </textarea>
+        <div class="container column align-baseline">
+          <input class="align-self-end" type="button" id="render" value="Render" min="0" max="100" />
+        </div>
+      </div>
+
+      <div id="right" class="container column flex b ">
+        <div class="container justify-between">
+          <label>Size:</label>
+          <select id="selsize" onchange="change(this,'selsizet')">
+            <option value="auto" selected>Auto</option>
+            <option value="informed">Informed</option>
+          </select>
+          <input type="text" id="selsizet" disabled value="Auto">
+        </div>
+
+        <div class="container justify-between">
+          <label>Cx:</label>
+          <input type="range" id="cxranger" min="0" max="1000" value="30" onchange="change(this,'cxranges')">
+          <input type="number" id="cxranges" value="30" onchange="displayValue(this,'cyranger')">
+        </div>
+
+        <div class="container justify-between">
+          <label>Cy:</label>
+          <input type="range" id="cyranger" min="0" max="1000" value="30" onchange="change(this,'cyranges')">
+          <input type="number" id="cyranges" value="30" onchange="displayValue(this,'cyranger')">
+        </div>
+
+        <div class="container justify-between">
+          <label>R:</label>
+          <input type="range" id="rranger" min="0" max="1000" value="30" onchange="change(this,'rranges')">
+          <input type="number" id="rranges" value="30" onchange="displayValue(this,'rranger')">
+        </div>
+
+        <div class="container justify-between">
+          <label>Color:</label>
+          <input type="text" id="rranger" value="30" onchange="change(this,'rranges')">
+          <input type="number" id="rranges" value="30" onchange="displayValue(this,'rranger')">
+        </div>
+
+        <div class="container justify-between">
+          <label>R:</label>
+          <input type="range" id="rranger" min="0" max="1000" value="30" onchange="change(this,'rranges')">
+          <input type="number" id="rranges" value="30" onchange="displayValue(this,'rranger')">
+        </div>
+
+        <div class="container justify-between">
+          <label>R:</label>
+          <input type="range" id="rranger" min="0" max="1000" value="30" onchange="change(this,'rranges')">
+          <input type="number" id="rranges" value="30" onchange="displayValue(this,'rranger')">
+        </div>
+        <div class="container justify-between">
+          <label>R:</label>
+          <input type="range" id="rranger" min="0" max="1000" value="30" onchange="change(this,'rranges')">
+          <input type="number" id="rranges" value="30" onchange="displayValue(this,'rranger')">
+        </div>
+        <div class="container justify-between">
+          <label>R:</label>
+          <input type="range" id="rranger" min="0" max="1000" value="30" onchange="change(this,'rranges')">
+          <input type="number" id="rranges" value="30" onchange="displayValue(this,'rranger')">
+        </div>
+        <div class="container justify-between">
+          <label>R:</label>
+          <input type="range" id="rranger" min="0" max="1000" value="30" onchange="change(this,'rranges')">
+          <input type="number" id="rranges" value="30" onchange="displayValue(this,'rranger')">
+        </div>
+        <div class="container justify-between">
+          <label>R:</label>
+          <input type="range" id="rranger" min="0" max="1000" value="30" onchange="change(this,'rranges')">
+          <input type="number" id="rranges" value="30" onchange="displayValue(this,'rranger')">
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 </body>
-<script  src="./script.js"></script>
+<script src="./script.js"></script>
+
 </html>
