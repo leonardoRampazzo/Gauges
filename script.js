@@ -87,31 +87,44 @@ class Gauge {
       var div_parent = document.getElementById(div);
       if (!div_parent)
         throw ("Div " + div + " not found");
-      this._div = div_parent;
-      this._size = config.size ? (config.size) : (this._defaultConfig.size);
-      this._colors = config.colors ? (config.colors) : (this._defaultConfig.colors);
-      this._animation = config.animation ? (config.animation) : (this._defaultConfig.animation);
-      this._animation_time = config.animation_time ? (config.animation_time) : (this._defaultConfig.animation_time);
-      this.radius_based = config.radius_based ? (config.radius_based) : (this._defaultConfig.radius_based);
-      this.background_stroke = config.background_stroke ? (config.background_stroke) : (this._defaultConfig.background_stroke);
-      this.foreground_stroke = config.foreground_stroke ? (config.foreground_stroke) : (this._defaultConfig.foreground_stroke);
-      this.backgroundstroke_width = config.backgroundstroke_width ? (config.backgroundstroke_width) : (this._defaultConfig.backgroundstroke_width);
-      this.foregroundstroke_width = config.foregroundstroke_width ? (config.foregroundstroke_width) : (this._defaultConfig.foregroundstroke_width);
-      this.forestroke_dasharray = config.forestroke_dasharray ? (config.forestroke_dasharray) : (this._defaultConfig.forestroke_dasharray);
+      config._div = div_parent;
+      config._size = config.size ? (config.size) : (this._defaultConfig.size);
+      config._colors = config.colors ? (config.colors) : (this._defaultConfig.colors);
+      config._animation = config.animation ? (config.animation) : (this._defaultConfig.animation);
+      config._animation_time = config.animation_time ? (config.animation_time) : (this._defaultConfig.animation_time);
+      config.radius_based = config.radius_based ? (config.radius_based) : (this._defaultConfig.radius_based);
+      config.background_stroke = config.background_stroke ? (config.background_stroke) : (this._defaultConfig.background_stroke);
+      config.foreground_stroke = config.foreground_stroke ? (config.foreground_stroke) : (this._defaultConfig.foreground_stroke);
+      config.backgroundstroke_width = config.backgroundstroke_width ? (config.backgroundstroke_width) : (this._defaultConfig.backgroundstroke_width);
+      config.foregroundstroke_width = config.foregroundstroke_width ? (config.foregroundstroke_width) : (this._defaultConfig.foregroundstroke_width);
+      config.forestroke_dasharray = config.forestroke_dasharray ? (config.forestroke_dasharray) : (this._defaultConfig.forestroke_dasharray);
+
+      this._div = config._div;
+      this._size = config._size;
+      this._colors = config._colors;
+      this._animation = config._animation;
+      this._animation_time = config._animation_time;
+      this.radius_based = config.radius_based;
+      this.background_stroke = config.background_stroke;
+      this.foreground_stroke = config.foreground_stroke;
+      this.backgroundstroke_width = config.backgroundstroke_width;
+      this.foregroundstroke_width = config.foregroundstroke_width;
+      this.forestroke_dasharray = config.forestroke_dasharray;
 
     } catch (err) {
       console.log(err);
     }
+
   }
 
-  render() { 
+  render() {
     if (this._size == 'auto') {
       var cx = this._div.offsetWidth / 2;
       var cy = this._div.offsetHeight / 2;
 
-      if (this.radius_based == 'Div_Diagonal') var r =  Math.sqrt(Math.pow(this._div.offsetWidth, 2) + Math.pow(this._div.offsetHeight, 2)) / 3.3;
-      if (this.radius_based == 'Div_Width')    var r =  this._div.offsetWidth / 2;
-      if (this.radius_based == 'Div_Height')   var r =  this._div.offsetHeight / 2;
+      if (this.radius_based == 'Div_Diagonal') var r = Math.sqrt(Math.pow(this._div.offsetWidth, 2) + Math.pow(this._div.offsetHeight, 2)) / 3.3;
+      if (this.radius_based == 'Div_Width') var r = this._div.offsetWidth / 2;
+      if (this.radius_based == 'Div_Height') var r = this._div.offsetHeight / 2;
 
     } else {
       try {
@@ -126,8 +139,8 @@ class Gauge {
         console.log(err);
       }
     }
-    
-    
+
+
     this._set_perc = 0;
     this._svg = document.createElementNS('http://www.w3.org/2000/svg', "svg");
     this._circle_background = document.createElementNS('http://www.w3.org/2000/svg', "circle");
@@ -154,7 +167,7 @@ class Gauge {
     this._svg.appendChild(this._circle_text);
     this._div.appendChild(this._svg);
 
-    
+
     var self = this;
     if (this._size == "auto") {
       addResizeListener(this._div, function () {
@@ -167,7 +180,7 @@ class Gauge {
     var cx = this._div.offsetWidth / 2;
     var cy = this._div.offsetHeight / 2;
     var r = Math.sqrt(Math.pow(this._div.offsetWidth, 2) + Math.pow(this._div.offsetHeight, 2)) / 3.3;
-    if((r >= this._div.offsetWidth / 2)||(r >= this._div.offsetHeight / 2)){
+    if ((r >= this._div.offsetWidth / 2) || (r >= this._div.offsetHeight / 2)) {
       return;
     }
     this._circle_background.setAttributeNS(null, "cx", cx);
@@ -250,36 +263,64 @@ class Gauge {
   }
 }
 
-function change(input,id){
-  var input_number = document.getElementById(id);
-  input_number.value = input.value;
+function $(id) {
+  return document.getElementById(id);
 }
 
-function render(){
+function change(input, id) {
+  var input_number = document.getElementById(id);
+  input_number.value = input.value;
+
+  switch (input.id) {
+    case 'cxranger':
+    case 'cyranger':
+    case 'rranger':
+    case 'cxranges':
+    case 'cyranges':
+    case 'rranges':
+      var size = {
+        cx: $("cxranger").value,
+        cy: $("cyranger").value,
+        r: $("rranger").value
+      };
+
+      g._size = size;
+      render();
+      break;
+
+    default:
+      break;
+  }
+
+
+}
+
+
+function render() {
   var div = document.getElementById('receiver');
   div.innerHTML = '';
-  var text = 
+  var text =
 
-  g.render();
+    g.render();
 }
 
 var text = document.getElementById("text")
-var g = new Gauge("receiver",{
-      //size: {cx:100,cy:100,r:50},
-      size: "auto",
-      radius_based: "Div_Height",
-      colors: ["#FF382D", "#E86A1F", "#FFB82F", "#E8D01F", "#B1FF27", "#0D964D"],
-      animation: true,
-      animation_time: '3s',
-      background_stroke: "#f0f0f0",
-      foreground_stroke: "#f0f0f0",
-      backgroundstroke_width: 10,
-      foregroundstroke_width: 10,
-      forestroke_dasharray: "0,2000"
+var g = new Gauge("receiver", {
+  //size: {cx:100,cy:100,r:50},
+  size: "auto",
+  radius_based: "Div_Height",
+  colors: ["#FF382D", "#E86A1F", "#FFB82F", "#E8D01F", "#B1FF27", "#0D964D"],
+  animation: true,
+  animation_time: '3s',
+  background_stroke: "#f0f0f0",
+  foreground_stroke: "#f0f0f0",
+  backgroundstroke_width: 10,
+  foregroundstroke_width: 10,
+  forestroke_dasharray: "0,2000"
 })
 
-text.innerHTML = "var defaul_config = " + JSON.stringify(g._defaultConfig,null,1);
+text.innerHTML = "var defaul_config = " + JSON.stringify(g._defaultConfig, null, 1);
 //g.render();
 
 
-
+console.log(g.config)

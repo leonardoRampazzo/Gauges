@@ -11,6 +11,7 @@ input[type=text]  {width: 60px;margin: 0px 5px 0px 10px;}
 
 
 div#receiver {background-color: #fff; border-radius: 13px; border-bottom: 5px solid black;}
+div#receiver svg {border-radius: 13px;}
 div#left     {background-color: #fff; border-radius: 13px; border-top:5px solid black; border-right: 5px solid black;}
 div#right    {background-color: #fff; border-radius: 13px; border-top:5px solid black; border-left: 5px solid black;}
 
