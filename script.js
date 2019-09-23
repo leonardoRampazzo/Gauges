@@ -72,6 +72,7 @@ class Gauge {
   constructor(div, config) {
     this._defaultConfig = {
       size: "auto",
+      radius_based: "Div_Diagonal",
       colors: ["#FF382D", "#E86A1F", "#FFB82F", "#E8D01F", "#B1FF27", "#0D964D"],
       animation: true,
       animation_time: '3s',
@@ -85,13 +86,13 @@ class Gauge {
     try {
       var div_parent = document.getElementById(div);
       if (!div_parent)
-        throw ("Div " + div + " nÃ£o encontrada");
+        throw ("Div " + div + " not found");
       this._div = div_parent;
       this._size = config.size ? (config.size) : (this._defaultConfig.size);
       this._colors = config.colors ? (config.colors) : (this._defaultConfig.colors);
       this._animation = config.animation ? (config.animation) : (this._defaultConfig.animation);
       this._animation_time = config.animation_time ? (config.animation_time) : (this._defaultConfig.animation_time);
-
+      this.radius_based = config.radius_based ? (config.radius_based) : (this._defaultConfig.radius_based);
       this.background_stroke = config.background_stroke ? (config.background_stroke) : (this._defaultConfig.background_stroke);
       this.foreground_stroke = config.foreground_stroke ? (config.foreground_stroke) : (this._defaultConfig.foreground_stroke);
       this.backgroundstroke_width = config.backgroundstroke_width ? (config.backgroundstroke_width) : (this._defaultConfig.backgroundstroke_width);
@@ -107,14 +108,18 @@ class Gauge {
     if (this._size == 'auto') {
       var cx = this._div.offsetWidth / 2;
       var cy = this._div.offsetHeight / 2;
-      var r =  Math.sqrt(Math.pow(this._div.offsetWidth, 2) + Math.pow(this._div.offsetHeight, 2)) / 3.3;
+
+      if (this.radius_based == 'Div_Diagonal') var r =  Math.sqrt(Math.pow(this._div.offsetWidth, 2) + Math.pow(this._div.offsetHeight, 2)) / 3.3;
+      if (this.radius_based == 'Div_Width')    var r =  this._div.offsetWidth / 2;
+      if (this.radius_based == 'Div_Height')   var r =  this._div.offsetHeight / 2;
+
     } else {
       try {
         var cx = this._size.cx;
         var cy = this._size.cy;
         var r = this._size.r;
         if (cx == undefined || cy == undefined || r == undefined) {
-          throw "Erro na definiÃ§Ã£o das dimensÃµes";
+          throw "Dimension errors";
           cx = cy = r = 0;
         }
       } catch (err) {
@@ -250,10 +255,19 @@ function change(input,id){
   input_number.value = input.value;
 }
 
+function render(){
+  var div = document.getElementById('receiver');
+  div.innerHTML = '';
+  var text = 
+
+  g.render();
+}
+
 var text = document.getElementById("text")
 var g = new Gauge("receiver",{
       //size: {cx:100,cy:100,r:50},
       size: "auto",
+      radius_based: "Div_Height",
       colors: ["#FF382D", "#E86A1F", "#FFB82F", "#E8D01F", "#B1FF27", "#0D964D"],
       animation: true,
       animation_time: '3s',
@@ -265,8 +279,7 @@ var g = new Gauge("receiver",{
 })
 
 text.innerHTML = "var defaul_config = " + JSON.stringify(g._defaultConfig,null,1);
-
-g.render();
+//g.render();
 
 
 

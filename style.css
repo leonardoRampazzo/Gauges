@@ -1,10 +1,14 @@
 html, body {width:100%;height:99.90%;margin: 0px;padding:0px;background-color: black;}
 svg {width:100%;height:100%;background-color:#fff;}
 
-.h50  {height: 50%;}
-label {width: 40px;text-align: right}
+.hcima  {height: 35%;}
+.hbaixo {height: 65%;}
+
+label {width: 80px;text-align: right}
 input[type=number]  {width: 60px;text-align: right;margin-right: 5px}
-input[type=text]  {width: 60px;margin-right: 5px}
+input[type=range]  {width: 60px;margin: 5px 5px 5px 10px;}
+input[type=text]  {width: 60px;margin: 0px 5px 0px 10px;}
+
 
 div#receiver {background-color: #fff; border-radius: 13px; border-bottom: 5px solid black;}
 div#left     {background-color: #fff; border-radius: 13px; border-top:5px solid black; border-right: 5px solid black;}
