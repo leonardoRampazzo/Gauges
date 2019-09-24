@@ -78,8 +78,8 @@ class Gauge {
       animation_time: '3s',
       background_stroke: "#f0f0f0",
       foreground_stroke: "#f0f0f0",
-      backgroundstroke_width: 10,
-      foregroundstroke_width: 10,
+      backgroundstroke_width: 5,
+      foregroundstroke_width: 5,
       forestroke_dasharray: "0,2000"
     };
 
@@ -119,13 +119,14 @@ class Gauge {
 
   render() {
     if (this._size == 'auto') {
-      var cx = this._div.offsetWidth / 2;
-      var cy = this._div.offsetHeight / 2;
+      //we was using offsetwidth and offsetheigth
+      var cx = this._div.clientWidth / 2;
+      var cy = this._div.clientHeight / 2;
 
       if (this.radius_based == 'Div_Diagonal') var r = Math.sqrt(Math.pow(this._div.offsetWidth, 2) + Math.pow(this._div.offsetHeight, 2)) / 3.3;
-      if (this.radius_based == 'Div_Width') var r = this._div.offsetWidth / 2;
-      if (this.radius_based == 'Div_Height') var r = this._div.offsetHeight / 2;
-
+      if (this.radius_based == 'Div_Width') var r = this._div.clientWidth  / 2;
+      if (this.radius_based == 'Div_Height') var r = this._div.clientHeight  / 2;
+    
     } else {
       try {
         var cx = this._size.cx;
@@ -283,14 +284,33 @@ function change(input, id) {
         cy: $("cyranger").value,
         r: $("rranger").value
       };
-
       g._size = size;
-      render();
+      break;
+
+    case "radiussel":
+      g.radius_based = input.value;
+      break;
+
+    case "selsize":
+      if(input.value=="informed"){
+        var size = {
+          cx: $("cxranger").value,
+          cy: $("cyranger").value,
+          r: $("rranger").value
+        };
+        g._size = size;
+      }
+
+      if(input.value=="auto"){
+        g._size = input.value;
+      } 
       break;
 
     default:
       break;
   }
+
+  render();
 
 
 }
@@ -320,7 +340,4 @@ var g = new Gauge("receiver", {
 })
 
 text.innerHTML = "var defaul_config = " + JSON.stringify(g._defaultConfig, null, 1);
-//g.render();
-
-
-console.log(g.config)
+g.render();

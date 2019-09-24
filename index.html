@@ -14,22 +14,22 @@
 
 <body>
   <div class="container column full-height">
-    <div id="receiver" class="container row flex b ">
+    <div id="receiver" class="flex b ">
     </div>
     <div class="container row flex   ">
       <div id="left" class="container column flex b">
         <textarea id="text" class="flex">
         </textarea>
         <div class="container row justify-between">
-          <input class="align-self-start" type="button" id="getconfig" value="Get Config" onclick="render()"/>
-          <input class="align-self-end" type="button" id="render" value="Render" onclick="render()"/>
+          <input class="align-self-start" type="button" id="getconfig" value="Get Config" onclick="render()" />
+          <input class="align-self-end" type="button" id="render" value="Render" onclick="render()" />
         </div>
       </div>
 
       <div id="right" class="container column flex b ">
         <div class="container justify-between">
           <label>Size:</label>
-          <select id="selsize" onchange="change(this,'selsizet')">
+          <select class="flex" id="selsize" onchange="change(this,'selsizet')">
             <option value="auto" selected>Auto</option>
             <option value="informed">Informed</option>
           </select>
@@ -38,13 +38,15 @@
 
         <div class="container justify-between align-center">
           <label>Cx:</label>
-          <input class="flex" type="range" id="cxranger" min="0" max="1000" value="30" onchange="change(this,'cxranges')">
+          <input class="flex" type="range" id="cxranger" min="0" max="1000" value="30"
+            onchange="change(this,'cxranges')">
           <input type="number" id="cxranges" value="30" onchange="change(this,'cxranger')">
         </div>
 
         <div class="container justify-between align-center">
           <label>Cy:</label>
-          <input class="flex" type="range" id="cyranger" min="0" max="1000" value="30" onchange="change(this,'cyranges')">
+          <input class="flex" type="range" id="cyranger" min="0" max="1000" value="30"
+            onchange="change(this,'cyranges')">
           <input type="number" id="cyranges" value="30" onchange="change(this,'cyranger')">
         </div>
 
@@ -54,10 +56,22 @@
           <input type="number" id="rranges" value="30" onchange="change(this,'rranger')">
         </div>
 
+        <div class="container justify-between">
+          <label>Rds Based:</label>
+          <select class="flex" id="radiussel" onchange="change(this,'radiusselt')">
+            <option value="Div_Diagonal" selected>Diagonal(div)</option>
+            <option value="Div_Width">Width(div)</option>
+            <option value="Div_Height">Height(div)</option>
+          </select>
+          <input type="text" id="radiusselt" disabled value="Auto">
+        </div>
+
         <div class="container justify-between align-center">
           <label>Colors: </label>
-          <input class="flex" type="text" id="colorst" value=' ["#FF382D","#E86A1F","#FFB82F","#E8D01F","#B1FF27","#0D964D"]' onchange="change(this,'colors')">
-          <input type="text" id="colors" value=' ["#FF382D","#E86A1F","#FFB82F","#E8D01F","#B1FF27","#0D964D"]' disabled>
+          <input class="flex" type="text" id="colorst"
+            value=' ["#FF382D","#E86A1F","#FFB82F","#E8D01F","#B1FF27","#0D964D"]' onchange="change(this,'colors')">
+          <input type="text" id="colors" value=' ["#FF382D","#E86A1F","#FFB82F","#E8D01F","#B1FF27","#0D964D"]'
+            disabled>
         </div>
 
         <div class="container justify-between align-center">
@@ -71,7 +85,8 @@
 
         <div class="container justify-between align-center">
           <label>Anm Time:</label>
-          <input class="flex" type="range" id="anime_time" min="0" max="100" value="3" onchange="change(this,'anime_time_number')">
+          <input class="flex" type="range" id="anime_time" min="0" max="100" value="3"
+            onchange="change(this,'anime_time_number')">
           <input type="number" id="anime_time_number" value="3" onchange="change(this,'anime_time')">
         </div>
 
@@ -89,19 +104,22 @@
 
         <div class="container justify-between align-center">
           <label>Bkg Str-w:</label>
-          <input class="flex" type="range" id="bkg_strk_width" value="3" onchange="change(this,'bkg_strk_width_number')">
+          <input class="flex" type="range" id="bkg_strk_width" value="3"
+            onchange="change(this,'bkg_strk_width_number')">
           <input type="number" id="bkg_strk_width_number" value="3" onchange="change(this,'bkg_strk_width')">
         </div>
 
         <div class="container justify-between align-center">
           <label>Frg Str-w:</label>
-          <input class="flex" type="range" id="Frg_strk_width" value="3" onchange="change(this,'Frg_strk_width_number')">
+          <input class="flex" type="range" id="Frg_strk_width" value="3"
+            onchange="change(this,'Frg_strk_width_number')">
           <input type="number" id="Frg_strk_width_number" value="3" onchange="change(this,'Frg_strk_width')">
         </div>
 
         <div class="container justify-between align-center">
           <label>Frg Str-w:</label>
-          <input class="flex" type="range" id="Frg_strk_width" value="3" onchange="change(this,'Frg_strk_width_number')">
+          <input class="flex" type="range" id="Frg_strk_width" value="3"
+            onchange="change(this,'Frg_strk_width_number')">
           <input type="number" id="Frg_strk_width_number" value="3" onchange="change(this,'Frg_strk_width')">
         </div>
 
