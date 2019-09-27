@@ -286,12 +286,14 @@ function change(input, id) {
     case 'cxranges':
     case 'cyranges':
     case 'rranges':
+      before_change = g._size.r;
       var size = {
         cx: $("cxranger").value,
         cy: $("cyranger").value,
         r: $("rranger").value
       };
       g._size = size;
+      if(size.r!=before_change)   $('fill').oninput();
       break;
 
     case "radiussel":
@@ -338,7 +340,7 @@ function change(input, id) {
       g.backgroundstroke_width = input.value;
       break;
 
-    case 'Frg_strk_width':
+    case 'frg_strk_width':
       g.foregroundstroke_width = input.value;
       break;
 
@@ -371,69 +373,38 @@ function render() {
 }
 
 function fillInputs(){
+  $('selsize').value = (g._size == 'auto')?'auto':'informed';
+
   $('cxranger').value = g._cx;
+  $('cxranges').value = g._cx;
   $('cyranger').value = g._cy;
+  $('cyranges').value = g._cy;
   $('rranger').value = g._r;
+  $('rranges').value = g._r;
+
   $('radiussel').value = g.radius_based;
+  $('colorst').value = g._colors;
+  $('selanime').value = (g._animation)?'True':'False';
+  
+  $('bkg_stroke').value = g.background_stroke;
+  $('bkg_stroke_text').value = g.background_stroke;
+
+  g.foreground_stroke = g._circle_foreground.getAttributeNS(null, "stroke")
+  $('frg_stroke').value = g.foreground_stroke;
+  $('frg_stroke_text').value = g.foreground_stroke;
+  
+  $('bkg_strk_width').value = g.backgroundstroke_width;
+  $('bkg_strk_width_number').value = g.backgroundstroke_width;
+
+  $('frg_strk_width').value = g.foregroundstroke_width;
+  $('frg_strk_width_number').value = g.foregroundstroke_width;
+
+  $('anime_time').value = parseInt(g._animation_time);
+  $('anime_time_number').value = parseInt(g._animation_time);
 
   g.forestroke_dasharray = g._circle_foreground.getAttributeNS(null, "stroke-dasharray")
   $('dasharray_left').value = parseFloat(g.forestroke_dasharray.split(',')[0]);
   $('dasharray_right').value = parseFloat(g.forestroke_dasharray.split(',')[1]);
-
-
-/*    case "radiussel":
-      g.radius_based = input.value;
-      break;
-
-    case "selsize":
-      if (input.value == "informed") {
-        var size = {
-          cx: $("cxranger").value,
-          cy: $("cyranger").value,
-          r: $("rranger").value
-        };
-        g._size = size;
-      }
-
-      if (input.value == "auto") {
-        g._size = input.value;
-      }
-      break;
-
-    case 'colorst':
-      g._colors = input.value;
-      break;
-
-    case 'selanime':
-      g._animation = input.value == "True";
-      break;
-
-    case 'anime_time':
-      g._animation_time = input.value + 's';
-      break;
-
-    case 'bkg_stroke':
-      g.background_stroke = input.value;
-      break;
-
-    case 'frg_stroke':
-      g.foreground_stroke = input.value;
-      break;
-
-
-    case 'bkg_strk_width':
-      g.backgroundstroke_width = input.value;
-      break;
-
-    case 'Frg_strk_width':
-      g.foregroundstroke_width = input.value;
-      break;
-
-    case 'dasharray_left':
-    case 'dasharray_right':
-      g.forestroke_dasharray = $("dasharray_left").value + "," + $("dasharray_right").value
-      break;
-*/
 
 } 
 
@@ -444,7 +415,7 @@ var g = new Gauge("receiver", {
   radius_based: "Div_Height",
   colors: ["#FF382D", "#E86A1F", "#FFB82F", "#E8D01F", "#B1FF27", "#0D964D"],
   animation: true,
-  animation_time: '3s',
+  animation_time: '2s',
   background_stroke: "#f0f0f0",
   foreground_stroke: "#f0f0f0",
   backgroundstroke_width: 10,
