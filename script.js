@@ -117,13 +117,12 @@ class Gauge {
 
   }
 
-  render() {
+  render(callback) {
     if (this._size == 'auto') {
-      //we was using offsetwidth and offsetheigth
       var cx = this._div.clientWidth / 2;
       var cy = this._div.clientHeight / 2;
 
-      if (this.radius_based == 'Div_Diagonal') var r = (Math.sqrt(Math.pow(this._div.offsetWidth, 2) + Math.pow(this._div.offsetHeight, 2)) / 3.3) - this.backgroundstroke_width;
+      if (this.radius_based == 'Div_Diagonal') var r = (Math.sqrt(Math.pow(this._div.clientWidth, 2) + Math.pow(this._div.clientHeight, 2)) / 3.3) - this.backgroundstroke_width;
       if (this.radius_based == 'Div_Width')    var r = (this._div.clientWidth / 2) - this.backgroundstroke_width;
       if (this.radius_based == 'Div_Height')   var r = (this._div.clientHeight / 2) - this.backgroundstroke_width;
 
@@ -141,6 +140,10 @@ class Gauge {
       }
     }
 
+    this._cx = cx;
+    this._cy = cy;
+    this._r = r;
+
 
     this._set_perc = 0;
     this._svg = document.createElementNS('http://www.w3.org/2000/svg', "svg");
@@ -150,18 +153,18 @@ class Gauge {
 
     this._circle_background.setAttributeNS(null, "stroke", this.background_stroke);
     this._circle_background.setAttributeNS(null, "stroke-width", this.backgroundstroke_width);
-    this._circle_background.setAttributeNS(null, "cx", cx);
-    this._circle_background.setAttributeNS(null, "cy", cy);
-    this._circle_background.setAttributeNS(null, "r", r);
+    this._circle_background.setAttributeNS(null, "cx", this._cx);
+    this._circle_background.setAttributeNS(null, "cy", this._cy);
+    this._circle_background.setAttributeNS(null, "r", this._r);
     this._circle_background.setAttributeNS(null, "fill", "none");
     this._circle_foreground.setAttributeNS(null, "stroke", this.foreground_stroke);
     this._circle_foreground.setAttributeNS(null, "stroke-width", this.foregroundstroke_width);
-    this._circle_foreground.setAttributeNS(null, "cx", cx);
-    this._circle_foreground.setAttributeNS(null, "cy", cy);
-    this._circle_foreground.setAttributeNS(null, "r", r);
+    this._circle_foreground.setAttributeNS(null, "cx", this._cx);
+    this._circle_foreground.setAttributeNS(null, "cy", this._cy);
+    this._circle_foreground.setAttributeNS(null, "r", this._r);
     this._circle_foreground.setAttributeNS(null, "fill", "none");
     this._circle_foreground.setAttributeNS(null, "stroke-dasharray", this.forestroke_dasharray);
-    this._circle_foreground.setAttributeNS(null, "transform", "rotate(-90," + cx + "," + cy + ")");
+    this._circle_foreground.setAttributeNS(null, "transform", "rotate(-90," + this._cx + "," + this._cy + ")");
 
     this._svg.appendChild(this._circle_background);
     this._svg.appendChild(this._circle_foreground);
@@ -175,6 +178,10 @@ class Gauge {
         self.resize();
       });
     };
+
+    if(callback){
+      callback();
+    }
   }
 
   resize() {
@@ -339,8 +346,6 @@ function change(input, id) {
     case 'dasharray_right':
       g.forestroke_dasharray = $("dasharray_left").value + "," + $("dasharray_right").value
       break;
-
-
     default:
       break;
   }
@@ -349,13 +354,88 @@ function change(input, id) {
 }
 
 
+function fill(input,id){
+  var input_number = document.getElementById(id);
+  input_number.value = input.value;
+  g.complete(input.value);
+  fillInputs();
+}
+
+
 function render() {
   var div = document.getElementById('receiver');
   div.innerHTML = '';
   var text =
 
-    g.render(); ///lll vou ter que passar um callback para que ele faca umas coisas depois que terminar!
+    g.render();
 }
+
+function fillInputs(){
+  $('cxranger').value = g._cx;
+  $('cyranger').value = g._cy;
+  $('rranger').value = g._r;
+  $('radiussel').value = g.radius_based;
+
+  g.forestroke_dasharray = g._circle_foreground.getAttributeNS(null, "stroke-dasharray")
+  $('dasharray_left').value = parseFloat(g.forestroke_dasharray.split(',')[0]);
+  $('dasharray_right').value = parseFloat(g.forestroke_dasharray.split(',')[1]);
+
+
+/*    case "radiussel":
+      g.radius_based = input.value;
+      break;
+
+    case "selsize":
+      if (input.value == "informed") {
+        var size = {
+          cx: $("cxranger").value,
+          cy: $("cyranger").value,
+          r: $("rranger").value
+        };
+        g._size = size;
+      }
+
+      if (input.value == "auto") {
+        g._size = input.value;
+      }
+      break;
+
+    case 'colorst':
+      g._colors = input.value;
+      break;
+
+    case 'selanime':
+      g._animation = input.value == "True";
+      break;
+
+    case 'anime_time':
+      g._animation_time = input.value + 's';
+      break;
+
+    case 'bkg_stroke':
+      g.background_stroke = input.value;
+      break;
+
+    case 'frg_stroke':
+      g.foreground_stroke = input.value;
+      break;
+
+
+    case 'bkg_strk_width':
+      g.backgroundstroke_width = input.value;
+      break;
+
+    case 'Frg_strk_width':
+      g.foregroundstroke_width = input.value;
+      break;
+
+    case 'dasharray_left':
+    case 'dasharray_right':
+      g.forestroke_dasharray = $("dasharray_left").value + "," + $("dasharray_right").value
+      break;
+*/
+
+} 
 
 var text = document.getElementById("text")
 var g = new Gauge("receiver", {
@@ -373,4 +453,4 @@ var g = new Gauge("receiver", {
 })
 
 text.innerHTML = "var defaul_config = " + JSON.stringify(g._defaultConfig, null, 1);
-g.render();
+g.render(fillInputs);

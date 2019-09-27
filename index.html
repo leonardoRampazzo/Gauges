@@ -38,22 +38,21 @@
 
         <div class="container justify-between align-center">
           <label>Cx:</label>
-          <input class="flex" type="range" id="cxranger" min="0" max="1000" value="30"
-            onchange="change(this,'cxranges')">
-          <input type="number" id="cxranges" value="30" onchange="change(this,'cxranger')">
+          <input class="flex" type="range" id="cxranger" min="0" max="1000" value="30" oninput="change(this,'cxranges')">
+          <input type="number" id="cxranges" value="30" oninput="change(this,'cxranger')">
         </div>
 
         <div class="container justify-between align-center">
           <label>Cy:</label>
           <input class="flex" type="range" id="cyranger" min="0" max="1000" value="30"
-            onchange="change(this,'cyranges')">
-          <input type="number" id="cyranges" value="30" onchange="change(this,'cyranger')">
+          oninput="change(this,'cyranges')">
+          <input type="number" id="cyranges" value="30" oninput="change(this,'cyranger')">
         </div>
 
         <div class="container justify-between align-center">
           <label>R:</label>
-          <input class="flex" type="range" id="rranger" min="0" max="1000" value="30" onchange="change(this,'rranges')">
-          <input type="number" id="rranges" value="30" onchange="change(this,'rranger')">
+          <input class="flex" type="range" id="rranger" min="0" max="1000" value="30" oninput="change(this,'rranges')">
+          <input type="number" id="rranges" value="30" oninput="change(this,'rranger')">
         </div>
 
         <div class="container justify-between">
@@ -86,8 +85,8 @@
         <div class="container justify-between align-center">
           <label>Anm Time:</label>
           <input class="flex" type="range" id="anime_time" min="0" max="100" value="3"
-            onchange="change(this,'anime_time_number')">
-          <input type="number" id="anime_time_number" value="3" onchange="change(this,'anime_time')">
+          oninput="change(this,'anime_time_number')">
+          <input type="number" id="anime_time_number" value="3" oninput="change(this,'anime_time')">
         </div>
 
         <div class="container justify-between align-center">
@@ -122,6 +121,14 @@
           <input class="flex" type="number" id="dasharray_right" value="2000" onchange="change(this,'dasharraytext')">
           <input type="text" id="dasharraytext" value="0,2000" disabled>
         </div>
+
+
+        <div class="container justify-between align-center">
+          <label>Fill:</label>
+          <input class="flex" type="range" id="fill" min="0" max="100" value="0" oninput="fill(this,'filln')">
+          <input type="number" id="filln" value="0" oninput="fill(this,'fill')">
+        </div>
+
       </div>
     </div>
 
