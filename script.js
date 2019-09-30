@@ -80,7 +80,8 @@ class Gauge {
       foreground_stroke: "#f0f0f0",
       backgroundstroke_width: 5,
       foregroundstroke_width: 5,
-      forestroke_dasharray: "0,2000"
+      forestroke_dasharray: "0,2000",
+      text : ""
     };
 
     try {
@@ -98,6 +99,7 @@ class Gauge {
       config.backgroundstroke_width = config.backgroundstroke_width ? (config.backgroundstroke_width) : (this._defaultConfig.backgroundstroke_width);
       config.foregroundstroke_width = config.foregroundstroke_width ? (config.foregroundstroke_width) : (this._defaultConfig.foregroundstroke_width);
       config.forestroke_dasharray = config.forestroke_dasharray ? (config.forestroke_dasharray) : (this._defaultConfig.forestroke_dasharray);
+      config.text = config.text ? (config.text) : (this._defaultConfig.text);
 
       this._div = config._div;
       this._size = config._size;
@@ -110,6 +112,8 @@ class Gauge {
       this.backgroundstroke_width = config.backgroundstroke_width;
       this.foregroundstroke_width = config.foregroundstroke_width;
       this.forestroke_dasharray = config.forestroke_dasharray;
+      this.text = config.text;
+
 
     } catch (err) {
       console.log(err);
@@ -166,6 +170,14 @@ class Gauge {
     this._circle_foreground.setAttributeNS(null, "stroke-dasharray", this.forestroke_dasharray);
     this._circle_foreground.setAttributeNS(null, "transform", "rotate(-90," + this._cx + "," + this._cy + ")");
 
+    this._circle_text.textContent = "Leonardo"; //this.text;
+    
+    this._circle_text.setAttributeNS(null, "x", this._cx);
+    this._circle_text.setAttributeNS(null, "y", this._cy);
+    this._circle_text.setAttributeNS(null, "text-anchor", "middle");
+    this._circle_text.setAttributeNS(null, "alignment-baseline", "middle");
+    
+
     this._svg.appendChild(this._circle_background);
     this._svg.appendChild(this._circle_foreground);
     this._svg.appendChild(this._circle_text);
@@ -185,12 +197,14 @@ class Gauge {
   }
 
   resize() {
-    var cx = this._div.offsetWidth / 2;
-    var cy = this._div.offsetHeight / 2;
-    var r = Math.sqrt(Math.pow(this._div.offsetWidth, 2) + Math.pow(this._div.offsetHeight, 2)) / 3.3;
-    if ((r >= this._div.offsetWidth / 2) || (r >= this._div.offsetHeight / 2)) {
-      return;
-    }
+    var cx = this._div.clientWidth / 2;
+    var cy = this._div.clientHeight / 2;
+
+    if (this.radius_based == 'Div_Diagonal') var r = (Math.sqrt(Math.pow(this._div.clientWidth, 2) + Math.pow(this._div.clientHeight, 2)) / 3.3) - this.backgroundstroke_width;
+    if (this.radius_based == 'Div_Width')    var r = (this._div.clientWidth / 2) - this.backgroundstroke_width;
+    if (this.radius_based == 'Div_Height')   var r = (this._div.clientHeight / 2) - this.backgroundstroke_width;
+
+
     this._circle_background.setAttributeNS(null, "cx", cx);
     this._circle_background.setAttributeNS(null, "cy", cy);
     this._circle_background.setAttributeNS(null, "r", r);
@@ -212,6 +226,7 @@ class Gauge {
   complete(percent) {
     var isIE = /*@cc_on!@*/ false || !!document.documentMode;
     var circle = this._circle_foreground;
+    var text   = this._circle_text;
     var raio = parseFloat(circle.getAttributeNS(null, 'r'));
     var svg = this._svg;
     var angle = 1;
@@ -407,6 +422,30 @@ function fillInputs(){
   $('dasharray_right').value = parseFloat(g.forestroke_dasharray.split(',')[1]);
 
 } 
+
+function getConfig(){
+
+  var x =  {
+    cx: $('cxranger').value,
+    cy: $('cxranges').value,
+    r: $('cyranger').value
+  }
+
+  var config = {
+    size: ((g._size != 'auto')?x:'auto'),
+    radius_based : g.radius_based,
+    colors: g._colors,
+    animation: g._animation,
+    animation_time: g._animation_time,
+    background_stroke: g.background_stroke,
+    foreground_stroke: g.foreground_stroke,
+    backgroundstroke_width: g.backgroundstroke_width,
+    foregroundstroke_width: g.foregroundstroke_width,
+    forestroke_dasharray: g.forestroke_dasharray
+  }
+
+  text.innerHTML = "var Setup = " + JSON.stringify(config, null, 1);
+}
 
 var text = document.getElementById("text")
 var g = new Gauge("receiver", {
