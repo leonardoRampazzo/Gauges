@@ -81,7 +81,8 @@ class Gauge {
       backgroundstroke_width: 5,
       foregroundstroke_width: 5,
       forestroke_dasharray: "0,2000",
-      text : ""
+      text: "",
+      textConfig: {'font-size': '50px', 'font-family': 'Arial,helvetica'} 
     };
 
     try {
@@ -100,6 +101,7 @@ class Gauge {
       config.foregroundstroke_width = config.foregroundstroke_width ? (config.foregroundstroke_width) : (this._defaultConfig.foregroundstroke_width);
       config.forestroke_dasharray = config.forestroke_dasharray ? (config.forestroke_dasharray) : (this._defaultConfig.forestroke_dasharray);
       config.text = config.text ? (config.text) : (this._defaultConfig.text);
+      config.textConfig = config.textConfig ? (config.textConfig) : (this._defaultConfig.textConfig);
 
       this._div = config._div;
       this._size = config._size;
@@ -113,7 +115,7 @@ class Gauge {
       this.foregroundstroke_width = config.foregroundstroke_width;
       this.forestroke_dasharray = config.forestroke_dasharray;
       this.text = config.text;
-
+      this.textConfig = config.textConfig;
 
     } catch (err) {
       console.log(err);
@@ -127,8 +129,8 @@ class Gauge {
       var cy = this._div.clientHeight / 2;
 
       if (this.radius_based == 'Div_Diagonal') var r = (Math.sqrt(Math.pow(this._div.clientWidth, 2) + Math.pow(this._div.clientHeight, 2)) / 3.3) - this.backgroundstroke_width;
-      if (this.radius_based == 'Div_Width')    var r = (this._div.clientWidth / 2) - this.backgroundstroke_width;
-      if (this.radius_based == 'Div_Height')   var r = (this._div.clientHeight / 2) - this.backgroundstroke_width;
+      if (this.radius_based == 'Div_Width') var r = (this._div.clientWidth / 2) - this.backgroundstroke_width;
+      if (this.radius_based == 'Div_Height') var r = (this._div.clientHeight / 2) - this.backgroundstroke_width;
 
     } else {
       try {
@@ -176,7 +178,8 @@ class Gauge {
     this._circle_text.setAttributeNS(null, "alignment-baseline", "middle");
     this._circle_text.setAttributeNS(null, "alignment-baseline", "middle");
     this._circle_text.textContent = this.text;
-    
+
+    for(var i in this.textConfig) this._circle_text.setAttributeNS(null, i, this.textConfig[i]);
     this._svg.appendChild(this._circle_background);
     this._svg.appendChild(this._circle_foreground);
     this._svg.appendChild(this._circle_text);
@@ -190,7 +193,7 @@ class Gauge {
       });
     };
 
-    if(callback){
+    if (callback) {
       callback();
     }
   }
@@ -200,8 +203,8 @@ class Gauge {
     var cy = this._div.clientHeight / 2;
 
     if (this.radius_based == 'Div_Diagonal') var r = (Math.sqrt(Math.pow(this._div.clientWidth, 2) + Math.pow(this._div.clientHeight, 2)) / 3.3) - this.backgroundstroke_width;
-    if (this.radius_based == 'Div_Width')    var r = (this._div.clientWidth / 2) - this.backgroundstroke_width;
-    if (this.radius_based == 'Div_Height')   var r = (this._div.clientHeight / 2) - this.backgroundstroke_width;
+    if (this.radius_based == 'Div_Width') var r = (this._div.clientWidth / 2) - this.backgroundstroke_width;
+    if (this.radius_based == 'Div_Height') var r = (this._div.clientHeight / 2) - this.backgroundstroke_width;
 
 
     this._circle_background.setAttributeNS(null, "cx", cx);
@@ -225,14 +228,14 @@ class Gauge {
     this.set_perc = 0;
   }
 
-  setText(text){
+  setText(text) {
     this._circle_text.textContent = text;
   }
 
   complete(percent) {
     var isIE = /*@cc_on!@*/ false || !!document.documentMode;
     var circle = this._circle_foreground;
-    var text   = this._circle_text;
+    var text = this._circle_text;
     var raio = parseFloat(circle.getAttributeNS(null, 'r'));
     var svg = this._svg;
     var angle = 1;
@@ -314,7 +317,7 @@ function change(input, id) {
         r: $("rranger").value
       };
       g._size = size;
-      if(size.r!=before_change)   $('fill').oninput();
+      if (size.r != before_change) $('fill').oninput();
       break;
 
     case "radiussel":
@@ -370,8 +373,8 @@ function change(input, id) {
       g.forestroke_dasharray = $("dasharray_left").value + "," + $("dasharray_right").value
       break;
 
-    case 'text':
-      g. 
+    case 'svg_text':
+      g.text = input.value;
       break;
 
     default:
@@ -382,7 +385,7 @@ function change(input, id) {
 }
 
 
-function fill(input,id){
+function fill(input, id) {
   var input_number = document.getElementById(id);
   input_number.value = input.value;
   g.complete(input.value);
@@ -393,13 +396,11 @@ function fill(input,id){
 function render() {
   var div = document.getElementById('receiver');
   div.innerHTML = '';
-  var text =
-
-    g.render();
+  g.render();
 }
 
-function fillInputs(){
-  $('selsize').value = (g._size == 'auto')?'auto':'informed';
+function fillInputs() {
+  $('selsize').value = (g._size == 'auto') ? 'auto' : 'informed';
 
   $('cxranger').value = g._cx;
   $('cxranges').value = g._cx;
@@ -410,15 +411,15 @@ function fillInputs(){
 
   $('radiussel').value = g.radius_based;
   $('colorst').value = g._colors;
-  $('selanime').value = (g._animation)?'True':'False';
-  
+  $('selanime').value = (g._animation) ? 'True' : 'False';
+
   $('bkg_stroke').value = g.background_stroke;
   $('bkg_stroke_text').value = g.background_stroke;
 
   g.foreground_stroke = g._circle_foreground.getAttributeNS(null, "stroke")
   $('frg_stroke').value = g.foreground_stroke;
   $('frg_stroke_text').value = g.foreground_stroke;
-  
+
   $('bkg_strk_width').value = g.backgroundstroke_width;
   $('bkg_strk_width_number').value = g.backgroundstroke_width;
 
@@ -432,21 +433,21 @@ function fillInputs(){
   $('dasharray_left').value = parseFloat(g.forestroke_dasharray.split(',')[0]);
   $('dasharray_right').value = parseFloat(g.forestroke_dasharray.split(',')[1]);
 
-  $('text').value = g.text;;
-  $('text_text').value = g.text;;
-} 
+  $('svg_text').value = g.text;
+  $('svg_text_text').value = g.text;
+}
 
-function getConfig(){
+function getConfig() {
 
-  var x =  {
+  var x = {
     cx: $('cxranger').value,
     cy: $('cxranges').value,
     r: $('cyranger').value
   }
 
   var config = {
-    size: ((g._size != 'auto')?x:'auto'),
-    radius_based : g.radius_based,
+    size: ((g._size != 'auto') ? x : 'auto'),
+    radius_based: g.radius_based,
     colors: g._colors,
     animation: g._animation,
     animation_time: g._animation_time,
@@ -454,10 +455,20 @@ function getConfig(){
     foreground_stroke: g.foreground_stroke,
     backgroundstroke_width: g.backgroundstroke_width,
     foregroundstroke_width: g.foregroundstroke_width,
-    forestroke_dasharray: g.forestroke_dasharray
+    forestroke_dasharray: g.forestroke_dasharray,
+    text: g.text,
+    textConfig: g.textConfig
   }
 
+  var text = document.getElementById('text');
   text.innerHTML = "var Setup = " + JSON.stringify(config, null, 1);
+}
+
+function setConfig(){
+  var config = $('text').value
+
+  console.log(config);
+
 }
 
 var text = document.getElementById("text")
@@ -473,7 +484,9 @@ var g = new Gauge("receiver", {
   foregroundstroke_width: 10,
   forestroke_dasharray: "0,2000",
   text: "-",
-  textConfig: {class:"svg_component_text"}
+  textConfig: {
+    'font-size': '16px', 'font-family': 'Arial,helvetica'
+  }
 })
 
 text.innerHTML = "var defaul_config = " + JSON.stringify(g._defaultConfig, null, 1);

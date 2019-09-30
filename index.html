@@ -22,6 +22,7 @@
         </textarea>
         <div class="container row justify-between">
           <input class="align-self-start" type="button" id="getconfig" value="Get Config" onclick="getConfig()" />
+          <input class="align-self-start" type="button" id="setconfig" value="Set Config" onclick="setConfig(this)" />
         </div>
       </div>
 
@@ -128,12 +129,9 @@
 
         <div class="container justify-between align-center">
           <label>Text:</label>
-          <input class="flex" type="text" id="text" value="-" oninput="change(this,'text_text')">
-          <input type="text" id="text_text" value="-">
+          <input class="flex" type="text" id="svg_text" value="-" oninput="change(this,'svg_text_text')">
+          <input type="text" id="svg_text_text" value="-">
         </div>
-
-
-
       </div>
     </div>
 
