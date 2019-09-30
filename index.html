@@ -120,12 +120,19 @@
           <input type="text" id="dasharraytext" value="0,2000" disabled>
         </div>
 
-
         <div class="container justify-between align-center">
           <label>Fill:</label>
           <input class="flex" type="range" id="fill" min="0" max="100" value="0" oninput="fill(this,'filln')">
           <input type="number" id="filln" value="0" oninput="fill(this,'fill')">
         </div>
+
+        <div class="container justify-between align-center">
+          <label>Text:</label>
+          <input class="flex" type="text" id="text" value="-" oninput="change(this,'text_text')">
+          <input type="text" id="text_text" value="-">
+        </div>
+
+
 
       </div>
     </div>

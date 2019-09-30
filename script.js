@@ -170,14 +170,13 @@ class Gauge {
     this._circle_foreground.setAttributeNS(null, "stroke-dasharray", this.forestroke_dasharray);
     this._circle_foreground.setAttributeNS(null, "transform", "rotate(-90," + this._cx + "," + this._cy + ")");
 
-    this._circle_text.textContent = "Leonardo"; //this.text;
-    
     this._circle_text.setAttributeNS(null, "x", this._cx);
     this._circle_text.setAttributeNS(null, "y", this._cy);
     this._circle_text.setAttributeNS(null, "text-anchor", "middle");
     this._circle_text.setAttributeNS(null, "alignment-baseline", "middle");
+    this._circle_text.setAttributeNS(null, "alignment-baseline", "middle");
+    this._circle_text.textContent = this.text;
     
-
     this._svg.appendChild(this._circle_background);
     this._svg.appendChild(this._circle_foreground);
     this._svg.appendChild(this._circle_text);
@@ -212,6 +211,9 @@ class Gauge {
     this._circle_foreground.setAttributeNS(null, "cy", cy);
     this._circle_foreground.setAttributeNS(null, "r", r);
     this._circle_foreground.setAttributeNS(null, "transform", "rotate(-90," + cx + "," + cy + ")");
+    this._circle_text.setAttributeNS(null, "x", cx);
+    this._circle_text.setAttributeNS(null, "y", cy);
+
     this.complete(this._set_perc);
   }
 
@@ -221,6 +223,10 @@ class Gauge {
     circle.style.transition = "none";
     circle.setAttribute("stroke-dasharray", "0, 20000");
     this.set_perc = 0;
+  }
+
+  setText(text){
+    this._circle_text.textContent = text;
   }
 
   complete(percent) {
@@ -363,6 +369,11 @@ function change(input, id) {
     case 'dasharray_right':
       g.forestroke_dasharray = $("dasharray_left").value + "," + $("dasharray_right").value
       break;
+
+    case 'text':
+      g. 
+      break;
+
     default:
       break;
   }
@@ -421,6 +432,8 @@ function fillInputs(){
   $('dasharray_left').value = parseFloat(g.forestroke_dasharray.split(',')[0]);
   $('dasharray_right').value = parseFloat(g.forestroke_dasharray.split(',')[1]);
 
+  $('text').value = g.text;;
+  $('text_text').value = g.text;;
 } 
 
 function getConfig(){
@@ -449,7 +462,6 @@ function getConfig(){
 
 var text = document.getElementById("text")
 var g = new Gauge("receiver", {
-  //size: {cx:100,cy:100,r:50},
   size: "auto",
   radius_based: "Div_Height",
   colors: ["#FF382D", "#E86A1F", "#FFB82F", "#E8D01F", "#B1FF27", "#0D964D"],
@@ -459,7 +471,9 @@ var g = new Gauge("receiver", {
   foreground_stroke: "#f0f0f0",
   backgroundstroke_width: 10,
   foregroundstroke_width: 10,
-  forestroke_dasharray: "0,2000"
+  forestroke_dasharray: "0,2000",
+  text: "-",
+  textConfig: {class:"svg_component_text"}
 })
 
 text.innerHTML = "var defaul_config = " + JSON.stringify(g._defaultConfig, null, 1);
