@@ -176,7 +176,6 @@ class Gauge {
     this._circle_text.setAttributeNS(null, "y", this._cy);
     this._circle_text.setAttributeNS(null, "text-anchor", "middle");
     this._circle_text.setAttributeNS(null, "alignment-baseline", "middle");
-    this._circle_text.setAttributeNS(null, "alignment-baseline", "middle");
     this._circle_text.textContent = this.text;
 
     for(var i in this.textConfig) this._circle_text.setAttributeNS(null, i, this.textConfig[i]);
@@ -186,12 +185,17 @@ class Gauge {
     this._div.appendChild(this._svg);
 
 
+    console.log(!this._div.__resizeListeners__)
+
     var self = this;
-    if (this._size == "auto") {
+    if (this._size == "auto" && !this._div.__resizeListeners__) {
+
       addResizeListener(this._div, function () {
         self.resize();
       });
     };
+
+    console.log(!this._div.__resizeListeners__)
 
     if (callback) {
       callback();
@@ -199,13 +203,13 @@ class Gauge {
   }
 
   resize() {
+    console.log("here");
     var cx = this._div.clientWidth / 2;
     var cy = this._div.clientHeight / 2;
 
     if (this.radius_based == 'Div_Diagonal') var r = (Math.sqrt(Math.pow(this._div.clientWidth, 2) + Math.pow(this._div.clientHeight, 2)) / 3.3) - this.backgroundstroke_width;
     if (this.radius_based == 'Div_Width') var r = (this._div.clientWidth / 2) - this.backgroundstroke_width;
     if (this.radius_based == 'Div_Height') var r = (this._div.clientHeight / 2) - this.backgroundstroke_width;
-
 
     this._circle_background.setAttributeNS(null, "cx", cx);
     this._circle_background.setAttributeNS(null, "cy", cy);
@@ -228,8 +232,9 @@ class Gauge {
     this.set_perc = 0;
   }
 
-  setText(text) {
-    this._circle_text.textContent = text;
+  setText(input) {
+    this.text = input;
+    this._circle_text.textContent = input;
   }
 
   complete(percent) {
@@ -374,7 +379,7 @@ function change(input, id) {
       break;
 
     case 'svg_text':
-      g.text = input.value;
+      g.setText(input.value);
       break;
 
     default:
@@ -396,6 +401,15 @@ function fill(input, id) {
 function render() {
   var div = document.getElementById('receiver');
   div.innerHTML = '';
+  
+  removeEventListener(div, function () {
+    self.resize();
+  })
+
+  for(var i in div){
+    console.log(i,div[i]);
+  }
+
   g.render();
 }
 
