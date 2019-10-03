@@ -387,7 +387,6 @@ function change(input, id) {
   render();
 }
 
-
 function fill(input, id) {
   var input_number = document.getElementById(id);
   input_number.value = input.value;
@@ -395,21 +394,17 @@ function fill(input, id) {
   fillInputs();
 }
 
-
 function render() {
   var div = document.getElementById('receiver');
-
-  console.log(div.childNodes)
-
-  var child = div.firstChild;
-  while (child) {
-    console.log(child.nodeName)
-    child = div.nextElementSibling;
-    div.removeChild(child);
+  
+  for(var i = 0,lt = div.childNodes.length;i<lt;i++){
+    var e = div.childNodes[i];
+    if(e.tagName && e.tagName=="svg"){
+      div.removeChild(e);
+      break;
+    }
   }
-   
-
-  //g.render();
+  g.render();
 }
 
 function fillInputs() {
