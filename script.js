@@ -82,7 +82,10 @@ class Gauge {
       foregroundstroke_width: 5,
       forestroke_dasharray: "0,2000",
       text: "",
-      textConfig: {'font-size': '50px', 'font-family': 'Arial,helvetica'} 
+      textConfig: {
+        'font-size': '50px',
+        'font-family': 'Arial,helvetica'
+      }
     };
 
     try {
@@ -178,24 +181,19 @@ class Gauge {
     this._circle_text.setAttributeNS(null, "alignment-baseline", "middle");
     this._circle_text.textContent = this.text;
 
-    for(var i in this.textConfig) this._circle_text.setAttributeNS(null, i, this.textConfig[i]);
+    for (var i in this.textConfig) this._circle_text.setAttributeNS(null, i, this.textConfig[i]);
     this._svg.appendChild(this._circle_background);
     this._svg.appendChild(this._circle_foreground);
     this._svg.appendChild(this._circle_text);
     this._div.appendChild(this._svg);
 
 
-    console.log(!this._div.__resizeListeners__)
-
     var self = this;
     if (this._size == "auto" && !this._div.__resizeListeners__) {
-
       addResizeListener(this._div, function () {
         self.resize();
       });
     };
-
-    console.log(!this._div.__resizeListeners__)
 
     if (callback) {
       callback();
@@ -203,7 +201,7 @@ class Gauge {
   }
 
   resize() {
-    console.log("here");
+    console.log('aqui')
     var cx = this._div.clientWidth / 2;
     var cy = this._div.clientHeight / 2;
 
@@ -400,17 +398,18 @@ function fill(input, id) {
 
 function render() {
   var div = document.getElementById('receiver');
-  div.innerHTML = '';
-  
-  removeEventListener(div, function () {
-    self.resize();
-  })
 
-  for(var i in div){
-    console.log(i,div[i]);
+  console.log(div.childNodes)
+
+  var child = div.firstChild;
+  while (child) {
+    console.log(child.nodeName)
+    child = div.nextElementSibling;
+    div.removeChild(child);
   }
+   
 
-  g.render();
+  //g.render();
 }
 
 function fillInputs() {
@@ -478,7 +477,7 @@ function getConfig() {
   text.innerHTML = "var Setup = " + JSON.stringify(config, null, 1);
 }
 
-function setConfig(){
+function setConfig() {
   var config = $('text').value
 
   console.log(config);
@@ -499,7 +498,8 @@ var g = new Gauge("receiver", {
   forestroke_dasharray: "0,2000",
   text: "-",
   textConfig: {
-    'font-size': '16px', 'font-family': 'Arial,helvetica'
+    'font-size': '16px',
+    'font-family': 'Arial,helvetica'
   }
 })
 
