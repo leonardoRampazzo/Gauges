@@ -30,7 +30,11 @@ gauge1.setText("80%"); //will put a text inside it
 Well if you wanna play more with the functionalities of this componet visit my codepen 
 there you can test   whatever you want!
 
+
 [https://codepen.io/leonardorampazzo/pen/XWWrazz]
+Change the view mode for a better experience. 
+![](image/codepen.gif)
+
 
 
 
