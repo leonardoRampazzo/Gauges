@@ -25,7 +25,7 @@ Now thar you have your gauge ready to use calling a funtion will make it fill li
 gauge1.complete(80); //will complete 80% of the gauge
 gauge1.setText("80%"); //will put a text inside it
 ```
-![](gauge_completing.png)
+![](image/gauge_completing.png)
 
 Well if you wanna play more with the functionalities of this componet visit my codepen 
 there you can test   whatever you want!
