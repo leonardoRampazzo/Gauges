@@ -1,5 +1,7 @@
 # Gauges
 
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NNFE9L9JXPNRJ&source=url)
+
 It's a simple way of insert gauges in your web site or any kind of this composed by html, css and js
 
 To start you will need a div in a html file, like this 
@@ -25,6 +27,7 @@ Now thar you have your gauge ready to use calling a funtion will make it fill li
 gauge1.complete(80); //will complete 80% of the gauge
 gauge1.setText("80%"); //will put a text inside it
 ```
+
 ![](image/gauge_completing.gif)
 
 Well if you wanna play more with the functionalities of this componet visit my codepen 
